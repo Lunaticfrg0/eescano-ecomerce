@@ -4,9 +4,9 @@ import {
     createUserDocumentFromAuth,
      } from "../../utils/firebase/firebase.utils"
 
-import "./sign-in.styles.scss"
+import "./authentication.styles.scss"
 
-const SignIn = () => {
+const Authentication = () => {
     const logGoogleUser = async () => {
         const {user} = await signInWithGooglePopUp();
         createUserDocumentFromAuth(user)    
@@ -20,4 +20,4 @@ const SignIn = () => {
     )
 };
 
-export default SignIn;
+export default Authentication;

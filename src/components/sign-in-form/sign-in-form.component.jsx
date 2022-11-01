@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword, signInWithGooglePopUp } from "../../utils/firebase/firebase.utils";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
+import { UserContext } from "../../contexts/user.context";
 import "./sign-in-form.styles.scss"
 
 const defaultFormFields = {
@@ -12,6 +13,8 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
     const { email, password } = formFields;
+
+    const {setCurrentUser} = useContext(UserContext)
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -29,7 +32,8 @@ const SignInForm = () => {
             return
         }
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password)
+            const { user } = await signInAuthUserWithEmailAndPassword(email, password)
+            setCurrentUser(user)
             resetFormFields()
         } catch (error) {
             switch(error.code){
@@ -37,7 +41,7 @@ const SignInForm = () => {
                     alert("Email or password incorrect")
                     break;
                 case "auth/user-not-found":
-                    alert("Not user associates to email")
+                    alert("No user associates to email")
                     break;
                 default:
                     console.log(error.code)

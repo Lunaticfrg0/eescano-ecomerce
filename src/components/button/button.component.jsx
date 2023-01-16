@@ -21,5 +21,4 @@ const Button = ({children, buttonType, isLoading, ...otherProps}) => {
         </CustomButton>
     )
 }
-
 export default Button;

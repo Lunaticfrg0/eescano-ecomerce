@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
@@ -15,7 +15,7 @@ const SignInForm = () => {
     const { email, password } = formFields;
     const dispatch = useDispatch();
 
-    const handleChange = (event) => {
+    const handleChange = (event : ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         setFormFields({...formFields, [name]: value})
     }
@@ -24,7 +24,7 @@ const SignInForm = () => {
         setFormFields(defaultFormFields)
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if(!email || !password){
             alert("All values should be added")
@@ -34,17 +34,7 @@ const SignInForm = () => {
             dispatch(emailSignInStart(email, password))
             resetFormFields()
         } catch (error) {
-            switch(error.code){
-                case "auth/wrong-password":
-                    alert("Email or password incorrect")
-                    break;
-                case "auth/user-not-found":
-                    alert("No user associates to email")
-                    break;
-                default:
-                    console.log(error.code)
-                    break;
-            }
+            console.log(error)
         }
 
     }

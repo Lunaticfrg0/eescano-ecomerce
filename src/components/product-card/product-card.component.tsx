@@ -7,9 +7,13 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../../store/cart/cart.action';
 import { selectCartItems } from '../../store/cart/cart.selector';
+import { CategoryItem } from '../../store/categories/category.types';
 
+type ProductCardProps ={
+    product : CategoryItem
+}
 
-const ProductCard = ({product}) => {
+const ProductCard = ({product} : ProductCardProps) => {
     const dispatch = useDispatch()
     const cartItems = useSelector(selectCartItems)
     const addProductToCart = () => dispatch(addItemToCart(cartItems, product))

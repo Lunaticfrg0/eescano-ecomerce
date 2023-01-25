@@ -1,6 +1,6 @@
-import { CategoryContainer, Title } from './category.styles';
+import { CategoryHolder, Title, CategoryMaxContainer } from './category.styles';
 import { useParams } from "react-router-dom";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../../components/product-card/product-card.component";
 import { useSelector } from 'react-redux';
 import { selectCategoriesMap, selectCategoriesIsLoading } from '../../store/categories/category.selector';
@@ -21,18 +21,18 @@ const Category = () => {
     }, [category, categoriesMap])
 
     return (
-        <Fragment>
+        <CategoryMaxContainer>
             <Title>{category.toUpperCase()}</Title>
             {
-                isLoading ? <Spinner/> : <CategoryContainer>
+                isLoading ? <Spinner/> : <CategoryHolder>
                 {
                     products &&
                     products.map((product) => <ProductCard key={product.id} product={product}/>)
                 }  
-            </CategoryContainer>
+            </CategoryHolder>
             }
             
-        </Fragment>
+        </CategoryMaxContainer>
     )
 }
 export default Category;
